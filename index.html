@@ -1,0 +1,33 @@
+<html>
+<head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="http://parsleyjs.org/dist/parsley.min.js"></script>
+<script type="text/javascript" src="http://parsleyjs.org/dist/parsley.remote.min.js"></script>
+<style>
+.signup input, .signup textarea {
+  display: block;
+  margin: 2em;
+  width: 34%;
+}
+</style>
+</head>
+<body>
+  <section class="signup">
+    <form action="/" method="POST">
+      <input name="name" type="text" placeholder="name" data-parsley-required="true" data-parsley-or="" data-parsley-length="[3, 20]">
+      <input id="signup-email" name="email" type="email" placeholder="email" data-parsley-remote="validate/email" data-parsley-remote-message="Email is already signed up to the party.">
+      <input id="signup-phone" name="phone" type="text" placeholder="mobile" data-parsley-type="digits" data-parsley-length="[10, 10]" data-parsley-remote="validate/phone" data-parsley-remote-message="Phone is already signed up to the party.">
+      <textarea name="comment" placeholder="comment" data-parsley-length="[4, 4000]"></textarea>
+      <input type="submit" value="Save">
+    </form>
+  </section>
+<script>
+window.ParsleyValidator
+  .addValidator('or', function (value, requirement) {
+      return $('#signup-email').val().length > 0 || $('#signup-phone').val().length > 0;
+  }, 32)
+  .addMessage('en', 'or', 'Please give us a mobile or an email. Whichever you feel comfortable with giving out.')
+$('.signup form').parsley();
+</script>
+</body>
+</html>
