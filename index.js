@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var store = require('node-persist');
-var storeDir = process.cwd() + '/';
+var storeDir = process.cwd() + '/db';
 var fs = require('fs');
 
 store.initSync({
@@ -13,11 +13,6 @@ store.initSync({
 var findUsers = function() {
   return store.getItem("users") || [];
 }
-
-app.get('/robots.txt', function (req, res) {
-    res.type('text/plain');
-    res.send("User-agent: *\nDisallow: /yYrnZRRaX3rMYfaTiTBTAahMgwcjrhrrdJZXXaBeyzvjhcND7Q");
-});
 
 // accept form posts.
 app.use(bodyParser.urlencoded({extended: true}));
